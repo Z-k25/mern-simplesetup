@@ -1,8 +1,17 @@
 import path from 'path'
 import express from 'express'
+import {
+    MongoClient
+} from 'mongodb'
 import devBundle from './devBundle'
 import template from './../template'
 const CURRENT_WORKING_DIR = process.cwd()
+const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/mernSimpleSetup'
+
+MongoClient.connect(url, (err, db) => {
+    console.log("Connected succesfully to mongodbserver")
+    db.close()
+})
 
 const app = express()
 app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')))
