@@ -8,11 +8,6 @@ import template from './../template'
 const CURRENT_WORKING_DIR = process.cwd()
 const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/mernSimpleSetup'
 
-MongoClient.connect(url, (err, db) => {
-    console.log("Connected succesfully to mongodbserver")
-    db.close()
-})
-
 const app = express()
 app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')))
 devBundle.compile(app)
@@ -27,4 +22,9 @@ app.listen(port, function onStart(err) {
         console.log(err)
     }
     console.info('Server started on port %s.', port)
+})
+
+MongoClient.connect(url, (err, db) => {
+    console.log("Connected succesfully to mongodbserver")
+    db.close()
 })
